@@ -28,14 +28,14 @@ namespace SystemAPI.Repository
             return await _context.Systems.FirstOrDefaultAsync(s => s.Name == name);
         }
 
-        public async Task UpdateAsync(Entities.System system)
-        {
-            _context.Systems.Update(system);
-        }
-
         public async Task CreateAsync(Entities.System system)
         {
             await _context.Systems.AddAsync(system);
+        }
+
+        public async Task UpdateAsync(Entities.System system)
+        {
+            _context.Systems.Update(system);
         }
 
         public async Task RemoveAsync(Entities.System system)

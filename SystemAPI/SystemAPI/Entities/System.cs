@@ -8,6 +8,6 @@ namespace SystemAPI.Entities
         public int SystemId { get; set; }
         public string Adress { get; set; }
 
-        public virtual IEnumerable<Device> Devices { get; set; }
+        public virtual IEnumerable<Device>? Devices { get; set; }
     }
 }
