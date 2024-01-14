@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Data.Entities;
+using SystemAPI.Entities;
 
-namespace System.Data.Data
+namespace SystemAPI.Data
 {
     public class DatabaseContext : DbContext
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace System.Data.Entities
+namespace SystemAPI.Entities
 {
     public class Device : Entity
     {
