@@ -21,12 +21,24 @@ namespace SystemAPI.Repository
 
         public async Task<Device> GetAsync(int deviceId)
         {
-            return await _context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
+            var device = await _context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
+            if (device == null)
+            {
+                throw new Exception("Device does not exist.");
+            }
+
+            return device;
         }
 
         public async Task<Device> GetAsync(string name)
         {
-            return await _context.Devices.FirstOrDefaultAsync(d => d.Name == name);
+            var device = await _context.Devices.FirstOrDefaultAsync(d => d.Name == name);
+            if (device == null)
+            {
+                throw new Exception("Device does not exist.");
+            }
+
+            return device;
         }
 
         public async Task CreateAsync(Device device)
@@ -39,6 +51,20 @@ namespace SystemAPI.Repository
             await _context.Devices.AddAsync(device);
         }
 
+        public async Task AssignDeviceToSystem(int deviceId, int systemId)
+        {
+            var device = await GetAsync(deviceId);
+            
+            var system = await _context.Devices.FirstOrDefaultAsync(s => s.Id == systemId);
+            if (system == null)
+            {
+                throw new Exception("System does not exist.");
+            }
+
+            device.SystemId = systemId;
+            _context.Devices.Update(device);
+        }
+
         public async Task UpdateAsync(Device device, int id)
         {
             var deviceToUpdate = await GetAsync(id);
@@ -47,6 +73,11 @@ namespace SystemAPI.Repository
             if (nameExists)
             {
                 throw new Exception("Name already in use.");
+            }
+
+            if (await _context.Systems.AnyAsync(s => s.Id != device.SystemId))
+            {
+                throw new Exception("System does not exist.");
             }
 
             deviceToUpdate.Name = device.Name;

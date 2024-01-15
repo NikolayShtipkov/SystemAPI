@@ -4,6 +4,7 @@ namespace SystemAPI.Repository.IRepository
 {
     public interface IDeviceRepository
     {
+        Task AssignDeviceToSystem(int deviceId, int systemId);
         Task CreateAsync(Device device);
         Task<IEnumerable<Device>> GetAllAsync();
         Task<Device> GetAsync(int deviceId);

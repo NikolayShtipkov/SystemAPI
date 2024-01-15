@@ -47,6 +47,20 @@ namespace SystemAPI.Controllers
             return Ok();
         }
 
+        [HttpPut("{deviceId}/Assign/{systemId}")]
+        public async Task<IActionResult> AssignDeviceToSystem(int deviceId, int systemId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _deviceRepository.AssignDeviceToSystem(deviceId, systemId);
+            await _deviceRepository.SaveAsync();
+
+            return Ok();
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(DeviceDto model, int id)
         {
