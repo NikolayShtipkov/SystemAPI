@@ -10,8 +10,10 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-builder.Services.AddScoped<ISystemRepository, SystemRepository>();
-builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddTransient<ISystemRepository, SystemRepository>();
+builder.Services.AddTransient<IDeviceRepository, DeviceRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

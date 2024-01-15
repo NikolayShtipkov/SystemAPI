@@ -31,7 +31,14 @@ namespace SystemAPI.Repository
 
         public async Task CreateAsync(Device device)
         {
-            await _context.Devices.AddAsync(device);
+            try
+            {
+                await _context.Devices.AddAsync(device);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task UpdateAsync(Device device)

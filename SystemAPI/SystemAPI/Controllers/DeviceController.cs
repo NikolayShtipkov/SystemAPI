@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SystemAPI.Entities;
+using SystemAPI.Models;
 using SystemAPI.Repository.IRepository;
 
 namespace SystemAPI.Controllers
@@ -9,35 +11,37 @@ namespace SystemAPI.Controllers
     public class DeviceController : ControllerBase
     {
         private static IDeviceRepository _deviceRepository;
+        private static IMapper _mapper;
 
-        public DeviceController(IDeviceRepository deviceRepository)
+        public DeviceController(IDeviceRepository deviceRepository, IMapper mapper)
         {
             _deviceRepository = deviceRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Device>> GetAllAsync()
+        public async Task<IEnumerable<DeviceDto>> GetAllAsync()
         {
-            var device = await _deviceRepository.GetAllAsync();
-            return device;
+            var devices = await _deviceRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<DeviceDto>>(devices);
         }
 
         [HttpGet("{id}")]
-        public async Task<Device> GetAsync(int id)
+        public async Task<DeviceDto> GetAsync(int id)
         {
             var device = await _deviceRepository.GetAsync(id);
-            return device;
+            return _mapper.Map<DeviceDto>(device);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Device model)
+        public async Task<IActionResult> CreateAsync(DeviceDto model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            await _deviceRepository.CreateAsync(model);
+            await _deviceRepository.CreateAsync(_mapper.Map<Device>(model));
 
             return Ok();
         }
