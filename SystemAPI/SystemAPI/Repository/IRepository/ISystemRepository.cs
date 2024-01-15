@@ -6,7 +6,7 @@
         Task<IEnumerable<Entities.System>> GetAllAsync();
         Task<Entities.System> GetAsync(int systemId);
         Task<Entities.System> GetAsync(string name);
-        Task RemoveAsync(Entities.System system);
+        Task RemoveAsync(int id);
         Task SaveAsync();
         Task UpdateAsync(Entities.System system, int id);
     }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using SystemAPI.Entities;
 using SystemAPI.Models;
+using SystemAPI.Repository;
 using SystemAPI.Repository.IRepository;
 
 namespace SystemAPI.Controllers
@@ -41,6 +43,34 @@ namespace SystemAPI.Controllers
             }
 
             await _systemRepository.CreateAsync(_mapper.Map<Entities.System>(model));
+            await _systemRepository.SaveAsync();
+
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(SystemDto model, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _systemRepository.UpdateAsync(_mapper.Map<Entities.System>(model), id);
+            await _systemRepository.SaveAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _systemRepository.RemoveAsync(id);
             await _systemRepository.SaveAsync();
 
             return Ok();

@@ -41,11 +41,28 @@ namespace SystemAPI.Repository
 
         public async Task UpdateAsync(Entities.System system, int id)
         {
-            _context.Systems.Update(system);
+            var systemToUpdate = await GetAsync(id);
+            bool nameExists = await _context.Systems
+                .AnyAsync(d => d.Name == system.Name && d.Name != systemToUpdate.Name);
+            if (nameExists)
+            {
+                throw new Exception("Name already in use.");
+            }
+
+            systemToUpdate.Name = system.Name;
+            systemToUpdate.Adress = system.Adress;
+
+            _context.Systems.Update(systemToUpdate);
         }
 
-        public async Task RemoveAsync(Entities.System system)
+        public async Task RemoveAsync(int id)
         {
+            var system = await GetAsync(id);
+            if (system == null)
+            {
+                throw new Exception("System doesn't exist.");
+            }
+
             _context.Systems.Remove(system);
         }
 
