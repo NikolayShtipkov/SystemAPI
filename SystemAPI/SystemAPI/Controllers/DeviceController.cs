@@ -46,5 +46,33 @@ namespace SystemAPI.Controllers
 
             return Ok();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(DeviceDto model, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _deviceRepository.UpdateAsync(_mapper.Map<Device>(model), id);
+            await _deviceRepository.SaveAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _deviceRepository.RemoveAsync(id);
+            await _deviceRepository.SaveAsync();
+
+            return Ok();
+        }
     }
 }

@@ -31,23 +31,39 @@ namespace SystemAPI.Repository
 
         public async Task CreateAsync(Device device)
         {
-            try
+            if (await _context.Devices.AnyAsync(d => d.Name == device.Name))
             {
-                await _context.Devices.AddAsync(device);
+                throw new Exception("Name already in use.");
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+            await _context.Devices.AddAsync(device);
         }
 
-        public async Task UpdateAsync(Device device)
+        public async Task UpdateAsync(Device device, int id)
         {
-            _context.Devices.Update(device);
+            var deviceToUpdate = await GetAsync(id);
+            bool nameExists = await _context.Devices
+                .AnyAsync(d => d.Name == device.Name && d.Name != deviceToUpdate.Name);
+            if (nameExists)
+            {
+                throw new Exception("Name already in use.");
+            }
+
+            deviceToUpdate.Name = device.Name;
+            deviceToUpdate.Location = device.Location;
+            deviceToUpdate.SystemId = device.SystemId;
+
+            _context.Devices.Update(deviceToUpdate);
         }
 
-        public async Task RemoveAsync(Device device)
+        public async Task RemoveAsync(int id)
         {
+            var device = await GetAsync(id);
+            if (device == null)
+            {
+                throw new Exception("Device doesn't exist.");
+            }
+
             _context.Devices.Remove(device);
         }
 

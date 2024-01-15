@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SystemAPI.Data;
+using SystemAPI.Entities;
 using SystemAPI.Repository.IRepository;
 
 namespace SystemAPI.Repository
@@ -30,10 +31,15 @@ namespace SystemAPI.Repository
 
         public async Task CreateAsync(Entities.System system)
         {
+            if (await _context.Systems.AnyAsync(d => d.Name == system.Name))
+            {
+                throw new Exception("Name already in use.");
+            }
+
             await _context.Systems.AddAsync(system);
         }
 
-        public async Task UpdateAsync(Entities.System system)
+        public async Task UpdateAsync(Entities.System system, int id)
         {
             _context.Systems.Update(system);
         }

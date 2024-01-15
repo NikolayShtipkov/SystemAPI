@@ -8,6 +8,6 @@
         Task<Entities.System> GetAsync(string name);
         Task RemoveAsync(Entities.System system);
         Task SaveAsync();
-        Task UpdateAsync(Entities.System system);
+        Task UpdateAsync(Entities.System system, int id);
     }
 }
