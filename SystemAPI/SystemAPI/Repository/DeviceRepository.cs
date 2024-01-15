@@ -21,7 +21,7 @@ namespace SystemAPI.Repository
 
         public async Task<Device> GetAsync(int deviceId)
         {
-            return await _context.Devices.FirstOrDefaultAsync(d => d.DeviceId == deviceId);
+            return await _context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
         }
 
         public async Task<Device> GetAsync(string name)

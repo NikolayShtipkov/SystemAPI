@@ -12,34 +12,34 @@ namespace SystemAPI.Migrations
                 name: "Systems",
                 columns: table => new
                 {
-                    SystemId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Systems", x => x.SystemId);
+                    table.PrimaryKey("PK_Systems", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Devices",
                 columns: table => new
                 {
-                    DeviceId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SystemId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Devices", x => x.DeviceId);
+                    table.PrimaryKey("PK_Devices", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Devices_Systems_SystemId",
                         column: x => x.SystemId,
                         principalTable: "Systems",
-                        principalColumn: "SystemId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

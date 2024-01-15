@@ -12,7 +12,7 @@ using SystemAPI.Data;
 namespace SystemAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240114193729_InitialMigration")]
+    [Migration("20240115102147_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,14 +26,13 @@ namespace SystemAPI.Migrations
 
             modelBuilder.Entity("SystemAPI.Entities.Device", b =>
                 {
-                    b.Property<int>("DeviceId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeviceId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -43,7 +42,7 @@ namespace SystemAPI.Migrations
                     b.Property<int?>("SystemId")
                         .HasColumnType("int");
 
-                    b.HasKey("DeviceId");
+                    b.HasKey("Id");
 
                     b.HasIndex("SystemId");
 
@@ -52,21 +51,20 @@ namespace SystemAPI.Migrations
 
             modelBuilder.Entity("SystemAPI.Entities.System", b =>
                 {
-                    b.Property<int>("SystemId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SystemId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Adress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SystemId");
+                    b.HasKey("Id");
 
                     b.ToTable("Systems");
                 });

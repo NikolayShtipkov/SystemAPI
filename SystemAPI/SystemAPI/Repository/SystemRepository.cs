@@ -20,7 +20,7 @@ namespace SystemAPI.Repository
 
         public async Task<Entities.System> GetAsync(int systemId)
         {
-            return await _context.Systems.FirstOrDefaultAsync(s => s.SystemId == systemId);
+            return await _context.Systems.FirstOrDefaultAsync(s => s.Id == systemId);
         }
 
         public async Task<Entities.System> GetAsync(string name)
