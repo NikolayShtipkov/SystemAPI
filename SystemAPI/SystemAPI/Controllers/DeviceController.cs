@@ -42,6 +42,7 @@ namespace SystemAPI.Controllers
             }
 
             await _deviceRepository.CreateAsync(_mapper.Map<Device>(model));
+            await _deviceRepository.SaveAsync();
 
             return Ok();
         }
