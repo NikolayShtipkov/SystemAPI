@@ -24,7 +24,7 @@ namespace SystemAPI.Repository
             var device = await _context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
             if (device == null)
             {
-                throw new Exception("Device does not exist.");
+                throw new Exception(SD.SD.DeviceDoesNotExist);
             }
 
             return device;
@@ -35,7 +35,7 @@ namespace SystemAPI.Repository
             var device = await _context.Devices.FirstOrDefaultAsync(d => d.Name == name);
             if (device == null)
             {
-                throw new Exception("Device does not exist.");
+                throw new Exception(SD.SD.DeviceDoesNotExist);
             }
 
             return device;
@@ -45,7 +45,7 @@ namespace SystemAPI.Repository
         {
             if (await _context.Devices.AnyAsync(d => d.Name == device.Name))
             {
-                throw new Exception("Name already in use.");
+                throw new Exception(SD.SD.NameAlredyExist);
             }
 
             await _context.Devices.AddAsync(device);
@@ -58,7 +58,7 @@ namespace SystemAPI.Repository
             var system = await _context.Devices.FirstOrDefaultAsync(s => s.Id == systemId);
             if (system == null)
             {
-                throw new Exception("System does not exist.");
+                throw new Exception(SD.SD.SystemDoesNotExist);
             }
 
             device.SystemId = systemId;
@@ -72,12 +72,12 @@ namespace SystemAPI.Repository
                 .AnyAsync(d => d.Name == device.Name && d.Name != deviceToUpdate.Name);
             if (nameExists)
             {
-                throw new Exception("Name already in use.");
+                throw new Exception(SD.SD.NameAlredyExist);
             }
 
             if (await _context.Systems.AnyAsync(s => s.Id != device.SystemId))
             {
-                throw new Exception("System does not exist.");
+                throw new Exception(SD.SD.SystemDoesNotExist);
             }
 
             deviceToUpdate.Name = device.Name;
@@ -92,7 +92,7 @@ namespace SystemAPI.Repository
             var device = await GetAsync(id);
             if (device == null)
             {
-                throw new Exception("Device doesn't exist.");
+                throw new Exception(SD.SD.DeviceDoesNotExist);
             }
 
             _context.Devices.Remove(device);

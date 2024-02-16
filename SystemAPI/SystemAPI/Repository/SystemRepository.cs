@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SystemAPI.Data;
-using SystemAPI.Entities;
 using SystemAPI.Repository.IRepository;
 
 namespace SystemAPI.Repository
@@ -33,7 +32,7 @@ namespace SystemAPI.Repository
         {
             if (await _context.Systems.AnyAsync(d => d.Name == system.Name))
             {
-                throw new Exception("Name already in use.");
+                throw new Exception(SD.SD.NameAlredyExist);
             }
 
             await _context.Systems.AddAsync(system);
@@ -46,7 +45,7 @@ namespace SystemAPI.Repository
                 .AnyAsync(d => d.Name == system.Name && d.Name != systemToUpdate.Name);
             if (nameExists)
             {
-                throw new Exception("Name already in use.");
+                throw new Exception(SD.SD.NameAlredyExist);
             }
 
             systemToUpdate.Name = system.Name;
@@ -60,7 +59,7 @@ namespace SystemAPI.Repository
             var system = await GetAsync(id);
             if (system == null)
             {
-                throw new Exception("System doesn't exist.");
+                throw new Exception(SD.SD.SystemDoesNotExist);
             }
 
             _context.Systems.Remove(system);
