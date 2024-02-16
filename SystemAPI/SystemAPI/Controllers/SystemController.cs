@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using SystemAPI.Entities;
 using SystemAPI.Models;
-using SystemAPI.Repository;
 using SystemAPI.Repository.IRepository;
 
 namespace SystemAPI.Controllers
